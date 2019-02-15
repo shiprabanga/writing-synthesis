@@ -61,7 +61,7 @@ class Model():
     
     def build_computational_graph(self, inputs, cell, initial_cell_state, scope):
         # TODO():update scope
-        output, cell_final_state = tf.contrib.legacy_seq2seq.rnn_decoder(inputs, initial_cell_state, cell, loop_function=None, scope="cell0")
+        output, cell_final_state = tf.contrib.legacy_seq2seq.rnn_decoder(inputs, initial_cell_state, cell, loop_function=None, scope=scope)
         return output
 
     
