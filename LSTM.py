@@ -33,20 +33,21 @@ class Model():
         # Build an LSTM cell, each cell has rnn_size number of units
         cell_func = tf.contrib.rnn.LSTMCell
         print(self.args)
-        self.cell0 = cell_func(self.args['rnn_size'], state_is_tuple=True, initializer=self.graves_initializer)
-        self.cell1 = cell_func(self.args['rnn_size'], state_is_tuple=True, initializer=self.graves_initializer)
-        self.cell2 = cell_func(self.args['rnn_size'], state_is_tuple=True, initializer=self.graves_initializer)
+        with tf.variable_scope("foo", reuse=tf.AUTO_REUSE):
+            self.cell0 = cell_func(self.args['rnn_size'], state_is_tuple=True, initializer=self.graves_initializer)
+            self.cell1 = cell_func(self.args['rnn_size'], state_is_tuple=True, initializer=self.graves_initializer)
+            self.cell2 = cell_func(self.args['rnn_size'], state_is_tuple=True, initializer=self.graves_initializer)
         
-        # Placeholders for input and output data, each entry has tsteps points at a time
-        self.input = tf.placeholder(dtype=tf.float32, shape=[None, args['tsteps'], 3])
-        self.output = tf.placeholder(dtype=tf.float32, shape=[None, args['tsteps'], 3])
+            # Placeholders for input and output data, each entry has tsteps points at a time
+            self.input = tf.placeholder(dtype=tf.float32, shape=[None, args['tsteps'], 3])
+            self.output = tf.placeholder(dtype=tf.float32, shape=[None, args['tsteps'], 3])
         
-        # Setting the states of memory cells in each LSTM cell.
-        # batch_size is the number of training examples in a batch. Each training example is a set of tsteps number of
-        # (x,y, <end_of_stroke>) tuples, i.e. a sequence of strokes till t time steps.
-        self.istate_cell0 = self.cell0.zero_state(batch_size=args['batch_size'], dtype=tf.float32)
-        self.istate_cell1 = self.cell1.zero_state(batch_size=args['batch_size'], dtype=tf.float32)
-        self.istate_cell2 = self.cell2.zero_state(batch_size=args['batch_size'], dtype=tf.float32)
+            # Setting the states of memory cells in each LSTM cell.
+            # batch_size is the number of training examples in a batch. Each training example is a set of tsteps number of
+            # (x,y, <end_of_stroke>) tuples, i.e. a sequence of strokes till t time steps.
+            self.istate_cell0 = self.cell0.zero_state(batch_size=args['batch_size'], dtype=tf.float32)
+            self.istate_cell1 = self.cell1.zero_state(batch_size=args['batch_size'], dtype=tf.float32)
+            self.istate_cell2 = self.cell2.zero_state(batch_size=args['batch_size'], dtype=tf.float32)
 
 
     def init_args():

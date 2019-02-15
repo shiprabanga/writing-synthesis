@@ -77,8 +77,7 @@ class DataProcess():
             y_batch.append(np.copy(data[1:self.timesteps+1]))
             self.index_pointer += 1
             if(self.index_pointer >= len(self.stroke_data)):
-                self.init_batch_comp()   
-        print(x_batch[0][0], y_batch[0][0], x_batch[0][1], y_batch[0][1])        
+                self.init_batch_comp()    
         return x_batch, y_batch         
             
         
